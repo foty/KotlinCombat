@@ -70,6 +70,16 @@ class MethodOrFunction {
         f345(0)
         f345(0, 1, 2)
         f345(0, 2, 3, 4, 5)
+
+        val list: Array<String> = arrayOf("two","three","four")
+        val list2 = listOf("one",*list) // *list被称作为解包数组，又被称之为展开运算符
+        println(list2)
+
+
+        val list3: Array<String> = arrayOf("two","three","four")
+        val list4 = listOf("one",*list3) //
+        print(list4) //这里会出现异常：展开运算符只能展开数组数据，不能展开一个可变长的列表。
+
     }
 
     //中缀调用 使用infix修饰

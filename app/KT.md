@@ -6,12 +6,14 @@ KT的设计哲学:
 * 安全
 * 互操作性
 
-##### KT基础
+##### 第二章(KT基础)
 
 1. 函数、变量(方法)：  
  ```kotlin
+ //变量的声明
   val a = 4
   var b = 12.00
+  //函数声明
   fun max(a: Int, b: Int, c: Int): Int {
         return if (a > b) a else c
     }
@@ -26,9 +28,45 @@ KT的设计哲学:
  2. 字符串模板
  ```kotlin
   val s = "小平"
-System.out.println("$s下午没有来上班")
+  System.out.println("$s下午没有来上班")
+ ```   
+ 
+ 3. if else作为函数表达式
+ ```kotlin
+  fun max(a: Int, b: Int) = if (a > b) a else b
  ```
  
+ 4. when表达式(kt中没有switch，而是用when替代了，但是when功能更加强大)
+ 
+ 5. 循环(while、for)
+ 
+ 6. (range)区间的迭代
+ 
+ 7. 迭代map
+ 
+ 8. in 检查区间和集合
+ 
+ 9. try catch 异常使用(能作为表达式)
+ 
+##### 第三章
+ 
+ 1. 集合  
+ 
+ 2. 顶层函数、顶层属性概念
+ 
+ 3. 扩展函数与扩展属性
+ 
+ 4. 可变参数 vararg (展开运算符的使用)
+ 
+ 5. 中缀调用 (常见于map的创建)
+ 
+ 6. 三重引号字符串
+ 
+ 7. 局部函数与局部属性 (函数嵌套函数，局部函数可以访问所在函数的所有变量和参数)
+ 
+ 
+##### 第四章
+
  
  
  关键字:
