@@ -2,6 +2,11 @@ package com.example.kotlincombat.chapter4
 
 import com.example.kotlincombat.chapter2.Food
 
+fun main() {
+    val c = ClassKnowledge()
+    print( c.f22())
+}
+
 /**
  * Create by lxx
  * Date : 2020/5/27 15:05
@@ -55,6 +60,18 @@ class ClassKnowledge() : InterfaceKnowledge, ITest {
 
     //类委托
 
+    //对等性 kt中 == 实际上就是调用了equals,如果想比较引用值的话请示用 ===
+    fun f22() : Boolean{
+        val f1 = Food()
+        val f2 = Food()
+
+        val i= 4
+        val i1 = 4
+
+        return  i1 == i
+//        return f1 == f2
+    }
+
 
     //object 的使用
     // 1.使用object 是用单例写法更加简便
@@ -94,4 +111,8 @@ class ClassKnowledge() : InterfaceKnowledge, ITest {
     //3.对象表达式(匿名对象的使用)
 
 
+
+
 }
+
+
