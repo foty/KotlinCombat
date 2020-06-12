@@ -8,4 +8,7 @@ package com.example.kotlincombat.chapter4
 interface ITest {
 
     fun move () = print("ITest move move")
+
+
 }
+

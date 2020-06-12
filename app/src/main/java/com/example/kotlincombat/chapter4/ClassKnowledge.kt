@@ -108,9 +108,22 @@ class ClassKnowledge() : InterfaceKnowledge, ITest {
 
     }
 
-    //3.对象表达式(匿名对象的使用)
+    //3.对象表达式(匿名对象的使用) 匿名对象不是单例的，每次对象表达式执行都会创建一个新的对象实例。
 
+    private fun setClick(click: IClickTest){
 
+    }
+
+    fun testsetClick(){
+        //使用对象表达式。(kt的对象表达式就是java的匿名对象的替代品)
+        setClick(object : IClickTest{
+            override fun click1(string: String) {
+            }
+
+            override fun click2(boolean: Boolean) {
+            }
+        })
+    }
 
 
 }
