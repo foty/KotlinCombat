@@ -35,11 +35,10 @@ class LambdaTest {
     val p = createPerson("ppp", 19)
     //引用扩展函数
 
-
     private fun Person.adult() = age >= 18
 
     var a = Person().adult()
-//    var a2 = Person::adult  //暂时没想明白为什么会报错
+    var a2 = Person::adult
 
 
     //集合的函数式API
@@ -49,6 +48,8 @@ class LambdaTest {
 
     fun test(): Unit {
         print(list.filter { it % 2 == 0 })
+
+        print(personList.maxBy{it.age})
     }
 
     //map
@@ -61,6 +62,40 @@ class LambdaTest {
         print(personList.map { it.age })
 
         print(personList.map(Person::name))
+
+        //低效率写法
+        print(personList.filter { it.age == personList.maxBy{it.age}!!.age })
+
+        val age = personList.maxBy(Person::age)!!.age
+        personList.filter { it.age >= age }
     }
 
+    // any all count find
+    /**
+     * 判断所有元素是否满足条件使用 all
+     * 检查是否存在一个满足条件使用 any
+     * 判断多少满足了条件的数量使用 count
+     * 找到一个能满足条件的元素使用 find
+     */
+
+    //判断是否是未成年
+    val check = { p:Person -> p.age<=18}
+
+    //判断一群人是否是未成年。
+    val all = personList.all(check)
+    //判断是否存在未成年
+    val any = personList.any(check)
+    //统计未成年人的数量
+    val count = personList.count(check)
+    //找到一个未成年人
+    val find = personList.find(check)
+
+    // group by 分组。
+    val groupList = listOf("a","b","bb")
+    val s
+            = groupList.groupBy {String::first }
+
+    public fun String.first() : Char{
+        return this[0]
+    }
 }
