@@ -32,13 +32,13 @@ class LambdaTest {
 
     //使用构造方法引用存储或者延期执行创建类实例的动作。构造方法引用的形式是在双冒号候命指定类名称。
     val createPerson = ::Person
-    val p = createPerson("ppp", 19)
+    val p = createPerson("ppp", 19, listOf())
     //引用扩展函数
 
     private fun Person.adult() = age >= 18
 
     var a = Person().adult()
-    var a2 = Person::adult
+//    var a2 = Person::adult
 
 
     //集合的函数式API
@@ -92,7 +92,7 @@ class LambdaTest {
 
     // group by 分组。
     val groupList = listOf("a", "b", "bb")
-    val s = groupList.groupBy { String::first }
+//    val s = groupList.groupBy { String::first }
 
     public fun String.first(): Char {
         return this[0]
