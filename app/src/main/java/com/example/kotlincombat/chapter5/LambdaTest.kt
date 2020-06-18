@@ -49,7 +49,7 @@ class LambdaTest {
     fun test(): Unit {
         print(list.filter { it % 2 == 0 })
 
-        print(personList.maxBy{it.age})
+        print(personList.maxBy { it.age })
     }
 
     //map
@@ -64,7 +64,7 @@ class LambdaTest {
         print(personList.map(Person::name))
 
         //低效率写法
-        print(personList.filter { it.age == personList.maxBy{it.age}!!.age })
+        print(personList.filter { it.age == personList.maxBy { it.age }!!.age })
 
         val age = personList.maxBy(Person::age)!!.age
         personList.filter { it.age >= age }
@@ -79,7 +79,7 @@ class LambdaTest {
      */
 
     //判断是否是未成年
-    val check = { p:Person -> p.age<=18}
+    val check = { p: Person -> p.age <= 18 }
 
     //判断一群人是否是未成年。
     val all = personList.all(check)
@@ -91,11 +91,53 @@ class LambdaTest {
     val find = personList.find(check)
 
     // group by 分组。
-    val groupList = listOf("a","b","bb")
-    val s
-            = groupList.groupBy {String::first }
+    val groupList = listOf("a", "b", "bb")
+    val s = groupList.groupBy { String::first }
 
-    public fun String.first() : Char{
+    public fun String.first(): Char {
         return this[0]
+    }
+
+    // 处理集合嵌套的元素：flatMap(需要变换操作时用这个) 与 flatten(不需要变换操作用这个)。
+
+    val sssss = personList.flatMap { it.friends }.toList()
+
+    // 惰性集合操作：序列使用api asSequence() ,原因无他，有时候更加高效而已。
+    // 只有当末端操作执行时，中间操作才会执行。
+    val seque = personList.asSequence()
+        .filter { it.age > 18 }
+        .toList()
+
+    // 创建序列。
+    val sequeue = generateSequence(0) { it + 1 }
+
+
+    // lambda函数式编程
+
+    //with函数
+    fun testWith() {
+
+        val builder = Builder()
+        builder.setAge(12)
+        builder.setName("lilili")
+        builder.setList(listOf("1", "2", "3"))
+        // 使用 with函数 ===》
+        with(builder) {
+            setList(listOf("1"))
+            setName("nahe")
+            setAge(18)
+        }
+    }
+
+    //apply 与with几乎一样，但是apply有返回值
+    fun testApply() {
+        val builder = Builder()
+
+        // apply 返回值类型就是调用者
+        val apply = builder.apply {
+            setList(listOf("1"))
+            setName("nahe")
+            setAge(18)
+        }
     }
 }
