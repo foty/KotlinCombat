@@ -191,7 +191,7 @@ class operateCharacter : Comparable<Point> {
     }
 
     private fun test4(s: String): Point {
-        val (x, y) = s.split('.')
+        val (x, y) = s.split('.') //解构声明处理集合。
         return Point(x.toInt(), y.toInt())
     }
 
