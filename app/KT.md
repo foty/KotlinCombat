@@ -156,3 +156,4 @@ KT的设计哲学:
  by lazy{ } : 延迟初始化   
  inline : 声明为内联函数   
  noinline : 禁止内联   
+ reified : 类型参数不会再运行时被擦除  
