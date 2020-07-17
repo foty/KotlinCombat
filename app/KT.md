@@ -157,6 +157,16 @@ KT的设计哲学:
  
  6. KT中的in、out与Java通配符的<? extends T>、<? super T>
 
+
+##### 第十章。
+
+ 1. @Test(表示测试方法)
+ 
+ 2. @Deprecated(声明废弃，平滑过渡到另一个方法或类)
+ 
+ 
+ 
+ 
  
  关键字:
  val、var : 变量声明   

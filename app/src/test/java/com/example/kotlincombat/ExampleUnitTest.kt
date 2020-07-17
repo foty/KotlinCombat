@@ -1,5 +1,6 @@
 package com.example.kotlincombat
 
+import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -13,5 +14,16 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
+
+    }
+
+    @Deprecated("remove()", ReplaceWith("removeAt()"))
+    fun remove() {
+
+    }
+
+
+    fun test() {
+        remove()//调用时出现废弃标志。
     }
 }
