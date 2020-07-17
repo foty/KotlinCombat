@@ -1,5 +1,9 @@
 package com.example.kotlincombat.chapter9
 
+import android.content.Context
+import android.content.Intent
+import com.example.kotlincombat.R
+
 /**
  * Create by lxx
  * Date : 2020/7/9 11:43
@@ -21,13 +25,25 @@ class genericity {
 
     // 1.运行时泛型行为 (檫除与实化类型参数)
 
-    // 2.泛型檫除的好处： 保存到程序内的类型信息更少，程序使用的内存总量变小。
+    // 2.泛型檫除 -- 泛型类实例的类型实参在运行时是不被保留的。如创建了一个List<String>并将一些字符
+    // 串放入其中，但在运行中你只能看到一个List，不能识别出包含的是那种类型的元素。
+    // 好处： 保存到程序内的类型信息更少，程序使用的内存总量变小。
+
 
     // 3.声明带实化类型参数的函数(内联函数的类型形参能够被实化且只在内联函数中生效，(意味着可以在运行时
     // 引用具体的类型实参))
 
     //使用reified 修饰类型参数。
     inline fun <reified T> isA(value: Any) = value is T
+
+    /**
+     * activity跳转的优雅写法(内联+扩展形式)
+     */
+    inline fun <reified T> Context.startActivity() {
+        val i = Intent(this, T::class.java)
+        startActivity(i)
+    }
+
 
     //4.为什么实化只对内联函数起作用?
     /**
@@ -96,7 +112,50 @@ class genericity {
      * 1.如果A是B的子类型，那么*<B>就是*<A>的子类型。类型A、B交换了位置，子类型化被反转了。
      * 2.逆变in只能在in位置，不能在out位置。
      * 3.
-     *
      */
 
+    //9. 使用点变型 --> 在类型出现的地方指定变型
+    // 在每次使用带类型参数的类型的时候，还可以指定这个类型参数是否可以使用它的子类型或者超类型替换。这就叫做使用点类型。
+    // 如下例子:
+
+    fun <T> copyData(
+        source: MutableList<T>,
+        destion: MutableList<T>
+    ) {
+        for (item in source) {
+            destion.add(item)
+        }
+    }
+    //来源集合与写入集合都是不变型的类型，这是没有问题的，现在要这个方法支持不同类型的列表:
+
+    fun <T : R, R> copyData2(
+        source: MutableList<T>,
+        destion: MutableList<R>
+    ) {
+        for (item in source) {
+            destion.add(item)
+        }
+    }
+
+    //来源集合类似是目标集合类型的子类型。类型<Int,Any>是完全可以接受的，Int是Any的子类型。
+
+    fun <T> copyData3(
+        source: MutableList<out T>,
+        destion: MutableList<T>
+    ) {
+        for (item in source) {
+            destion.add(item)
+        }
+    }
+
+    //检验copyData3();
+    fun testCopyData3(){
+        val list1 : MutableList<out Number> = mutableListOf(1,2,3)
+        //list1.add(45) list1声明了 out后，不能再使用add方法了，
+        val list2 : MutableList<Any> = mutableListOf()
+        copyData3(list1,list2)
+    }
+
+
+    // 星投影 --> 使用*代替类型参数。当确切的类形实参是未知的或者不重要的时候，使用星投影语法。
 }
