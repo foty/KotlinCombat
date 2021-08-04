@@ -14,6 +14,5 @@ class CoroutinesDemo : Activity(){
         super.onCreate(savedInstanceState)
 
 
-
     }
 }

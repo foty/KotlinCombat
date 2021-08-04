@@ -29,7 +29,37 @@ fun main() {
 
 //    f8_1()
 
-    f9()
+//    f9()
+
+    test()
+
+}
+
+fun test() {
+   // println("thread1 =  ${Thread.currentThread().name}")  // main
+    GlobalScope.launch(Dispatchers.Default) {
+        println("thread2 =  ${Thread.currentThread().name}") // DefaultDispatcher-worker-1
+        for (item in 1..10) {
+            val i = test2()
+            println("输出结果是 $item ==== ${i + 1}")
+        }
+    }
+
+  //  println("thread3 =  ${Thread.currentThread().name}") // main
+    for (item in 1..10) {
+        Thread.sleep(1000)
+        println("我是非阻塞的 $item")
+    }
+
+    runBlocking {
+
+    }
+}
+
+suspend fun test2() = withContext(Dispatchers.Default) {
+//    println("thread4 =  ${Thread.currentThread().name}")   // DefaultDispatcher-worker-1
+    delay(2000)
+    50
 }
 
 // 1、协程基础写法
@@ -277,7 +307,7 @@ fun f9() {
 // 如果其中一个子协程失败，第一个async以及等待中的父协程都会被取消。
 
 
-fun f10() = runBlocking{
+fun f10() = runBlocking {
     val time = measureTimeMillis {
         println("666  ${as5()}")
     }
@@ -292,5 +322,28 @@ suspend fun as5(): Int = coroutineScope {
 
 
 // 5、协程上下文与调度器。
+
+fun f11() = runBlocking<Unit> {
+    launch {
+        // 运行在父协程的上下文中，即 runBlocking 主协程,承袭上下文
+        println("main runBlocking      : I'm working in thread ${Thread.currentThread().name}")
+    }
+
+    launch(Dispatchers.Unconfined) {
+        // 不受限的——将工作在主线程中
+        println("Unconfined            : I'm working in thread ${Thread.currentThread().name}")
+    }
+
+    launch(Dispatchers.Default) { //协程在GlobalScope中启动，也是获取默认调度器
+        // 将会获取默认调度器
+        println("Default               : I'm working in thread ${Thread.currentThread().name}")
+    }
+    launch(newSingleThreadContext("MyOwnThread")) {
+        // 将使它获得一个新的线程
+        println("newSingleThreadContext: I'm working in thread ${Thread.currentThread().name}")
+    }
+
+}
+
 
 
